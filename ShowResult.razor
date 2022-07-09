@@ -1,0 +1,37 @@
+﻿@page "/showresult"
+@using BlazorApp1.Data
+@inherits EmployeeService
+
+<h3>Show Result</h3>
+
+@if (Employees == null)
+{
+	<div class="spinner"></div>
+}
+else{
+<div>
+	<input type="text" placeholder="Enter..." @bind="employee.FirstName" />
+    <button class="btn-primary hidewhenprint" @onclick="showspecificbank">
+        Perform Search
+    </button>
+
+	@foreach (var employee in Employees)
+	{
+		<h1>Hello @employee.FirstName @employee.LastName</h1>
+		<a class="btn btn-primary">View</a>
+		<a class="btn btn-secondary">Edit</a>
+		<a class="btn btn-danger">Delete</a>
+	}
+</div>}
+
+
+@code {
+	 IList<Employee> uclist;
+	 Employee employee = new Employee();
+        public string FirstName { get; set; }
+	 void showspecificbank()
+        {
+            FirstName = employee.FirstName;
+            uclist = EmployeeService.GetuniqueSearch(FirstName);
+        }
+}
